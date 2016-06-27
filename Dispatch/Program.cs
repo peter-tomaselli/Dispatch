@@ -9,16 +9,24 @@ namespace Dispatch
 {
     class Program
     {
-        private static ICallableTable Table
+        private static ICallableTable<string> Table
         {
             get
             {
-                ICallableTable table = new CallableTable();
+                ICallableTable<string> table = new CallableTable<string>();
                 table.Register("hello", new Callable<string>(GetHello), "foo");
                 table.Register("person", new Callable<string, string>(GetHelloForPerson), "foo");
-                table.Register("three", new Callable<int>(GetThree), "bar");
+                return table;
+            }
+        }
 
-                table.Register("add", new Callable<int, int, int>(AddTwoNumbers), "math");
+        private static ICallableTable<int> IntTable
+        {
+            get
+            {
+                ICallableTable<int> table = new CallableTable<int>();
+                table.Register("add", new Callable<int, int, int>(AddTwoNumbers), "foo", "bar", "math");
+                table.Register("three", new Callable<int>(GetThree), "bar");
                 return table;
             }
         }
@@ -27,16 +35,16 @@ namespace Dispatch
         {
             System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
 
-            ICallable doHello = Table.GetCallable("foo", "hello");
-            ICallable doHelloPerson = Table.GetCallable("foo", "person");
-            ICallable doThree = Table.GetCallable("bar", "three");
+            ICallable<string> doHello = Table.GetCallable("foo", "hello");
+            ICallable<string> doHelloPerson = Table.GetCallable("foo", "person");
+            ICallable<int> doThree = IntTable.GetCallable("bar", "three");
 
             Console.WriteLine(doHello.InvokeWithArgs().ToString());
             Console.WriteLine(doThree.InvokeWithArgs().ToString());
 
             Console.WriteLine(doHelloPerson.InvokeWithArgs("Bob").ToString());
 
-            ICallable addition = Table.GetCallable("math", "add");
+            ICallable<int> addition = IntTable.GetCallable("math", "add");
 
             Console.WriteLine(addition.InvokeWithArgs(3, 3));
 
@@ -49,6 +57,7 @@ namespace Dispatch
             sw.Start();
 
             Console.WriteLine(Table.TableInfo.ToList());
+            Console.WriteLine(IntTable.TableInfo.ToList());
 
             sw.Stop();
 

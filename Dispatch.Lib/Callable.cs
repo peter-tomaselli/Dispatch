@@ -5,14 +5,20 @@ using System.Text;
 
 namespace Dispatch.Lib
 {
-    public interface ICallable : ICallable<object> { }
-
+    /// <summary>
+    /// this interface represents an object that can be invoked with an arbitrary number of arguments to return a value of type `R`
+    /// </summary>
+    /// <typeparam name="R"></typeparam>
     public interface ICallable<R>
     {
         R InvokeWithArgs(params object[] args);
     }
 
-    public class Callable<R> : ICallable
+    /// <summary>
+    /// an implementation of ICallable that wraps a function of no arguments
+    /// </summary>
+    /// <typeparam name="R"></typeparam>
+    public class Callable<R> : ICallable<R>
     {
         private readonly Func<R> _func;
 
@@ -30,14 +36,14 @@ namespace Dispatch.Lib
         {
             return _func.Do(args);
         }
-
-        object ICallable<object>.InvokeWithArgs(params object[] args)
-        {
-            return this.InvokeWithArgs(args);
-        }
     }
 
-    public class Callable<T1, R> : ICallable
+    /// <summary>
+    /// an implementation of ICallable that wraps a function of one argument
+    /// </summary>
+    /// <typeparam name="T1"></typeparam>
+    /// <typeparam name="R"></typeparam>
+    public class Callable<T1, R> : ICallable<R>
     {
         private readonly Func<T1, R> _func;
 
@@ -55,14 +61,9 @@ namespace Dispatch.Lib
         {
             return _func.Do(args);
         }
-
-        object ICallable<object>.InvokeWithArgs(params object[] args)
-        {
-            return this.InvokeWithArgs(args);
-        }
     }
 
-    public class Callable<T1, T2, R> : ICallable
+    public class Callable<T1, T2, R> : ICallable<R>
     {
         private readonly Func<T1, T2, R> _func;
 
@@ -79,11 +80,6 @@ namespace Dispatch.Lib
         public R InvokeWithArgs(params object[] args)
         {
             return _func.Do(args);
-        }
-
-        object ICallable<object>.InvokeWithArgs(params object[] args)
-        {
-            return this.InvokeWithArgs(args);
         }
     }
 }

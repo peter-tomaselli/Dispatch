@@ -5,26 +5,26 @@ using System.Text;
 
 namespace Dispatch.Lib
 {
-    public interface ICallableTable
+    public interface ICallableTable<R>
     {
         IEnumerable<KeyValuePair<string, string>> TableInfo { get; }
 
-        ICallable GetCallable(string domain, string name);
+        ICallable<R> GetCallable(string domain, string name);
 
-        void Register(string name, ICallable callable, params string[] domains);
+        void Register(string name, ICallable<R> callable, params string[] domains);
     }
 
-    public class CallableTable : ICallableTable
+    public class CallableTable<R> : ICallableTable<R>
     {
-        private IDictionary<string, IDictionary<string, ICallable>> _recs = new Dictionary<string, IDictionary<string, ICallable>>();
+        private IDictionary<string, IDictionary<string, ICallable<R>>> _recs = new Dictionary<string, IDictionary<string, ICallable<R>>>();
 
         public IEnumerable<KeyValuePair<string, string>> TableInfo
         {
             get
             {
-                foreach (KeyValuePair<string, IDictionary<string, ICallable>> domain in _recs)
+                foreach (KeyValuePair<string, IDictionary<string, ICallable<R>>> domain in _recs)
                 {
-                    foreach (KeyValuePair<string, ICallable> rec in domain.Value)
+                    foreach (KeyValuePair<string, ICallable<R>> rec in domain.Value)
                     {
                         yield return new KeyValuePair<string, string>(domain.Key, rec.Key);
                     }
@@ -32,7 +32,7 @@ namespace Dispatch.Lib
             }
         }
 
-        public ICallable GetCallable(string domain, string name)
+        public ICallable<R> GetCallable(string domain, string name)
         {
             if (_recs.ContainsKey(domain) && _recs[domain].ContainsKey(name))
             {
@@ -42,7 +42,7 @@ namespace Dispatch.Lib
             throw new InvalidOperationException("could not find callable for params");
         }
 
-        public void Register(string name, ICallable callable, params string[] domains)
+        public void Register(string name, ICallable<R> callable, params string[] domains)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -67,7 +67,7 @@ namespace Dispatch.Lib
                 }
                 else
                 {
-                    _recs[domain] = new Dictionary<string, ICallable>
+                    _recs[domain] = new Dictionary<string, ICallable<R>>
                     {
                         { name, callable }
                     };
