@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dispatch", "Dispatch\Dispat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dispatch.Lib", "Dispatch.Lib\Dispatch.Lib.csproj", "{BF55EFBC-7BBB-4041-931B-E360402E577E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlClr.Dispatchable", "SqlClr.Dispatchable\SqlClr.Dispatchable.csproj", "{A97BF908-B293-4768-8918-3F8BBE570B89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BF55EFBC-7BBB-4041-931B-E360402E577E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF55EFBC-7BBB-4041-931B-E360402E577E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF55EFBC-7BBB-4041-931B-E360402E577E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A97BF908-B293-4768-8918-3F8BBE570B89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A97BF908-B293-4768-8918-3F8BBE570B89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A97BF908-B293-4768-8918-3F8BBE570B89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A97BF908-B293-4768-8918-3F8BBE570B89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

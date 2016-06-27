@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Dispatch.Lib
 {
+    /// <summary>
+    /// this interface represents an object that acts like a 'dispatch table' for a number of ICallables that share the same return type (they do not have to share the same number or type of arguments). Each callable is addressable via the combination of a 'domain' (think namespace) and a name
+    /// </summary>
+    /// <typeparam name="R"></typeparam>
     public interface ICallableTable<R>
     {
         IEnumerable<KeyValuePair<string, string>> TableInfo { get; }
